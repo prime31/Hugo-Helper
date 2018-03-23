@@ -26,7 +26,7 @@ The main window where you will spend most of your time in Hugo Helper. Numbered 
 ## The Menu
 ![](README_Images/menu.png)
 
-Generally, once you setup your Hugo folder and Markdown app you wont need the menu unless you are doing some layout work or using Hugulp. When working with Hugulp `scss` files use the `File -> Start hugulp watcher` menu item to launch Terminal and get Hugulp watching your Hugulp folder for changes. The `File -> Build site` button will do a Hugo build and then a Hugulp build.
+Generally, once you setup your Hugo folder and Markdown app you wont need the menu unless you are doing some layout work or using Hugulp. When working with Hugulp `scss` files use the `File -> Start hugulp watcher` menu item to launch Terminal and get Hugulp watching your Hugulp folder for changes. The one downside here is if Hugulp gets an error while transpiling your scss files it poops itself and you need to restart it in Terminal. Just press `up` and then `return`. The `File -> Build site` button will do a Hugo build and then a Hugulp build.
 
 
 ## Creating New Files
