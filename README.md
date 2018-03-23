@@ -28,7 +28,7 @@ The main window where you will spend most of your time in Hugo Helper. Numbered 
 
 Generally, once you setup your Hugo folder and Markdown app you wont need the menu unless you are doing some layout work or using Hugulp. When working with Hugulp `scss` files use the `File -> Start hugulp watcher` menu item to launch Terminal and get Hugulp watching your Hugulp folder for changes. The one downside here is if Hugulp gets an error while transpiling your scss files it poops itself and you need to restart it in Terminal. Just press `up` and then `return`. The `File -> Build site` button will do a Hugo build and then a Hugulp build.
 
-If you want to take a peek at the Hugo server logs use the `Window -> Show Server Logs` menu item. It will open a new window with the logs that are updated in real time.
+If you want to take a peek at the Hugo server logs use the `Window -> Show Server Logs` menu item. It will open a new window with the logs that are updated in real time. Useful for when you are tinkering with your templates and you get compile errors.
 
 
 ## Creating New Files
