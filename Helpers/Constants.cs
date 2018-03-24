@@ -1,4 +1,5 @@
-﻿using Foundation;
+﻿using System.IO;
+using Foundation;
 
 
 namespace HugoHelper
@@ -10,6 +11,8 @@ namespace HugoHelper
 
 		public static string logNotificationKey = "log-notification";
 		public static string siteRebuiltNotificationKey = "site-rebuilt-notification";
+
+		public static string hugoContentPath { get { return Path.Combine( hugoProjectPath, "content" ); } }
 
 		public static string hugoProjectPath
 		{

@@ -48,8 +48,8 @@ namespace HugoHelper
 
 		void reloadData( string path )
 		{
-			var postsFolder = Path.Combine( path, "content" );
-			var files = Directory.GetFiles( postsFolder, "*.md", SearchOption.AllDirectories );
+			var contentPath = Constants.hugoContentPath;
+			var files = Directory.GetFiles( contentPath, "*.md", SearchOption.AllDirectories );
 
 			foreach( var file in files )
 			{
@@ -57,7 +57,7 @@ namespace HugoHelper
 
 				// add the path and extract the archetype
 				post.pathToFile = file;
-				post.archetype = file.Replace( postsFolder, string.Empty ).Replace( Path.GetFileName( file ), string.Empty ).Replace( "/", string.Empty );
+				post.archetype = file.Replace( contentPath, string.Empty ).Replace( Path.GetFileName( file ), string.Empty ).Replace( "/", string.Empty );
 				_allBlogPosts.Add( post );
 			}
 		}

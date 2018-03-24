@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using AppKit;
 using CoreGraphics;
 using Foundation;
@@ -156,6 +157,10 @@ namespace HugoHelper
 					if( match.Success )
 						Process.Start( "http://localhost:" + match.Value );
 				}
+				else if( args.Data.Contains( "Press Ctrl+C to stop" ) )
+				{
+					Console.WriteLine( "server appears to be running" );
+				}
 				else if( args.Data.Contains( "rebuilding site" ) )
 				{
 					NSNotificationCenter.DefaultCenter.PostNotification( NSNotification.FromName( Constants.siteRebuiltNotificationKey, null ) );
@@ -181,10 +186,18 @@ namespace HugoHelper
 		{
 			if( _serverProcess == null )
 				return;
-			
-			_serverProcess.StandardInput.WriteLine( "\x3" );
-			_serverProcess.StandardInput.Close();
-			_serverProcess.Close();
+
+			try
+			{
+				_serverProcess.StandardInput.WriteLine( "\x3" );
+				_serverProcess.StandardInput.Close();
+				_serverProcess.Close();
+			}
+			catch( Exception e )
+			{
+				Console.WriteLine( "failed to kill server: " + e );
+			}
+
 			_serverProcess = null;
 
 			// kill it dead
@@ -262,7 +275,7 @@ namespace HugoHelper
 				if( result == 1 )
 				{
 					var path = openPanel.DirectoryUrl.Path;
-					var contentPath = Path.Combine( path, "content" );
+					var contentPath = Constants.hugoContentPath;
 					if( Directory.Exists( contentPath ) )
 					{
 						Console.WriteLine( openPanel.DirectoryUrl.Path );
@@ -293,12 +306,19 @@ namespace HugoHelper
 			var alert = NSAlert.WithMessage( "Enter the page file name", "OK", "Cancel", null, "Enter the filename for your new page" );
 			var postFilenameInput = new NSTextField( new CoreGraphics.CGRect( 0, 30, 250, 24 ) );
 			postFilenameInput.PlaceholderString = "Page filename (excluding extension)";
+
 			var archetypeInput = new NSTextField( new CoreGraphics.CGRect( 0, 0, 250, 24 ) );
 			archetypeInput.PlaceholderString = "Page archetype (defaults to 'posts')";
 
+			// create a combobox and populate it with any found archetypes
+			var archetypeComboBox = new NSComboBox( new CoreGraphics.CGRect( 0, 0, 250, 24 ) );
+			archetypeComboBox.VisibleItems = 12;
+			foreach( var folder in Directory.GetDirectories( Constants.hugoContentPath ) )
+				archetypeComboBox.Add( Path.GetFileName( folder ).NSString() );
+
 			var view = new NSView( new CGRect( 0, 0, 250, 60 ) );
 			view.AddSubview( postFilenameInput );
-			view.AddSubview( archetypeInput );
+			view.AddSubview( archetypeComboBox );
 
 			alert.AccessoryView = view;
 
@@ -310,10 +330,19 @@ namespace HugoHelper
 					var filename = postFilenameInput.StringValue;
 					filename = filename.Replace( " ", "-");
 
+					if( filename.Length == 0 )
+					{
+						await Task.Delay( 500 ).ContinueWith( t =>
+						{
+							BeginInvokeOnMainThread( () => showAlert( "Invalid filename found", "We aren't going to create a new page with that slop!" ) );
+						} );
+						return;
+					}
+
 					if( !filename.EndsWith( ".md" ) )
 						filename = filename + ".md";
 
-					var archetype = archetypeInput.StringValue;
+					var archetype = archetypeComboBox.StringValue;
 					if( string.IsNullOrEmpty( archetype ) )
 						archetype = "posts";
 
