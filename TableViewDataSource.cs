@@ -16,6 +16,7 @@ namespace HugoHelper
 		bool _isShowingDrafts = true;
 		NSTableView _tableView;
 		bool _lastSortAscending;
+		char[] _pathSeperators = new char[] { Path.AltDirectorySeparatorChar, Path.DirectorySeparatorChar };
 
 
 		public TableViewDataSource( NSTableView tableView )
@@ -37,29 +38,32 @@ namespace HugoHelper
 		{
 			_allBlogPosts.Clear();
 
-			var path = Constants.hugoProjectPath;
-			if( path != null )
-				reloadData( path );
+			// only load from disk if we have a proper path
+			if( Constants.hugoProjectPath != null )
+			{
+				var path = Constants.hugoContentPath;
+				var files = Directory.GetFiles( path, "*.md", SearchOption.AllDirectories );
+				foreach( var file in files )
+				{
+					var post = parseFrontMatter( file );
+
+					// add the path
+					post.pathToFile = file;
+
+					// extract the archetype. if we have a first folder that is what we use
+					var relativePath = file.Replace( path, string.Empty ).TrimStart( _pathSeperators );
+					var pathParts = relativePath.Split( _pathSeperators );
+
+					// if we have more than 1 part left (filename) then the first of them is our archetype folder
+					if( pathParts.Length > 1 )
+						post.archetype = pathParts[0];
+
+					_allBlogPosts.Add( post );
+				}
+			}
 
 			setShowDrafts( _isShowingDrafts );
 			sortPosts( _tableView.SortDescriptors[0].Key, _lastSortAscending );
-		}
-
-
-		void reloadData( string path )
-		{
-			var contentPath = Constants.hugoContentPath;
-			var files = Directory.GetFiles( contentPath, "*.md", SearchOption.AllDirectories );
-
-			foreach( var file in files )
-			{
-				var post = parseFrontMatter( file );
-
-				// add the path and extract the archetype
-				post.pathToFile = file;
-				post.archetype = file.Replace( contentPath, string.Empty ).Replace( Path.GetFileName( file ), string.Empty ).Replace( "/", string.Empty );
-				_allBlogPosts.Add( post );
-			}
 		}
 
 

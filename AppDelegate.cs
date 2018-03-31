@@ -328,7 +328,7 @@ namespace HugoHelper
 				if( result == NSModalResponse.OK )
 				{
 					var filename = postFilenameInput.StringValue;
-					filename = filename.Replace( " ", "-");
+					filename = filename.Replace( " ", "-" );
 
 					if( filename.Length == 0 )
 					{

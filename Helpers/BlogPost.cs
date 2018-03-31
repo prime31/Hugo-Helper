@@ -6,7 +6,7 @@ namespace HugoHelper
 	public class BlogPost
 	{
 		public string pathToFile;
-		public string archetype;
+		public string archetype = String.Empty;
 
 		public string title { get; set; }
 		public DateTime date { get; set; }
@@ -15,8 +15,7 @@ namespace HugoHelper
 
 
 		public BlogPost()
-		{
-		}
+		{}
 
 
 		public BlogPost( string name, DateTime date, bool isDraft )
