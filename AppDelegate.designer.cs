@@ -14,6 +14,12 @@ namespace HugoHelper
 		[Action ("onClickBuildSite:")]
 		partial void onClickBuildSite (Foundation.NSObject sender);
 
+		[Action ("onClickDisableBlogPostSubfolder:")]
+		partial void onClickDisableBlogPostSubfolder (Foundation.NSObject sender);
+
+		[Action ("onClickEnableBlogPostSubfolder:")]
+		partial void onClickEnableBlogPostSubfolder (Foundation.NSObject sender);
+
 		[Action ("onClickNewBlogPost:")]
 		partial void onClickNewBlogPost (Foundation.NSObject sender);
 

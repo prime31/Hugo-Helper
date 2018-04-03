@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="13771"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14109"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -75,6 +75,25 @@
                                             <connections>
                                                 <action selector="onClickOpenHugoFolder:" target="Voe-Tx-rLC" id="y8A-uf-Xjd"/>
                                             </connections>
+                                        </menuItem>
+                                        <menuItem title="Add New Blog Posts in Year Subfolder" id="fLl-mb-0ao">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <menu key="submenu" title="Add New Blog Posts in Year Subfolder" id="d85-Ay-jW2">
+                                                <items>
+                                                    <menuItem title="Enable" tag="4" id="mdK-zU-aXZ">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                        <connections>
+                                                            <action selector="onClickEnableBlogPostSubfolder:" target="Voe-Tx-rLC" id="JNP-9a-Lij"/>
+                                                        </connections>
+                                                    </menuItem>
+                                                    <menuItem title="Disable" tag="5" id="xbt-kJ-ncM">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                        <connections>
+                                                            <action selector="onClickDisableBlogPostSubfolder:" target="Voe-Tx-rLC" id="SyY-J4-3Je"/>
+                                                        </connections>
+                                                    </menuItem>
+                                                </items>
+                                            </menu>
                                         </menuItem>
                                         <menuItem isSeparatorItem="YES" id="9CS-UT-Jbt"/>
                                         <menuItem title="Start hugulp watcher..." keyEquivalent="s" id="Lpr-iW-efF">

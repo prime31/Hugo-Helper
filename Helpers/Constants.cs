@@ -8,6 +8,7 @@ namespace HugoHelper
 	{
 		const string _defaultsPathKey = "hugo-path";
 		const string _markdownAppPathKey = "markdown-app-path";
+		const string _storePostsInYearSubdirectory = "store-posts-in-year-subdir";
 
 		public static string logNotificationKey = "log-notification";
 		public static string siteRebuiltNotificationKey = "site-rebuilt-notification";
@@ -24,6 +25,13 @@ namespace HugoHelper
 		{
 			get { return NSUserDefaults.StandardUserDefaults.StringForKey( _markdownAppPathKey ); }
 			set { NSUserDefaults.StandardUserDefaults.SetString( value, _markdownAppPathKey ); }
+		}
+
+
+		public static bool storePostsInYearSubdirectory
+		{
+			get { return NSUserDefaults.StandardUserDefaults.BoolForKey( _storePostsInYearSubdirectory ); }
+			set { NSUserDefaults.StandardUserDefaults.SetBool( value, _storePostsInYearSubdirectory ); }
 		}
 	}
 }

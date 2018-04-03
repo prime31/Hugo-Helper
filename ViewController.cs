@@ -13,6 +13,13 @@ namespace HugoHelper
 		}
 
 
+		public override void ViewWillAppear()
+		{
+			base.ViewWillAppear();
+			//View.Window.Appearance = NSAppearance.GetAppearance( NSAppearance.NameVibrantDark );
+		}
+
+
 		public override void AwakeFromNib()
 		{
 			base.AwakeFromNib();

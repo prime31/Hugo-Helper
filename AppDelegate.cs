@@ -66,6 +66,32 @@ namespace HugoHelper
 		}
 
 
+		[Action( "validateMenuItem:" )]
+		public bool ValidateMenuItem( NSMenuItem item )
+		{
+			switch( item.Tag )
+			{
+				case 4:
+					return !Constants.storePostsInYearSubdirectory;
+				case 5:
+					return Constants.storePostsInYearSubdirectory;
+			}
+			return true;
+		}
+
+
+		partial void onClickDisableBlogPostSubfolder( Foundation.NSObject sender )
+		{
+			Constants.storePostsInYearSubdirectory = false;
+		}
+
+
+		partial void onClickEnableBlogPostSubfolder( Foundation.NSObject sender )
+		{
+			Constants.storePostsInYearSubdirectory = true;
+		}
+
+
 		partial void onClickOpenConfigFile( Foundation.NSObject sender )
 		{
 			var app = Constants.markdownAppPath;
@@ -346,19 +372,21 @@ namespace HugoHelper
 					if( string.IsNullOrEmpty( archetype ) )
 						archetype = "posts";
 
-					createBlogPostFile( filename, archetype );
+					var subfolder = Constants.storePostsInYearSubdirectory ? DateTime.Now.ToString( "yyyy" ) : null;
+					createBlogPostFile( filename, archetype, subfolder );
 				}
 			} );
 		}
 
 
-		void createBlogPostFile( string filename, string archtype = "posts" )
+		void createBlogPostFile( string filename, string archtype = "posts", string subfolder = null )
 		{
+			var subfolderStr = subfolder != null ? subfolder + "/" : string.Empty;
 			var startInfo = new ProcessStartInfo
 			{
 				CreateNoWindow = true,
 				UseShellExecute = false,
-				Arguments = string.Format( "new {0}/{1}", archtype, filename ),
+				Arguments = string.Format( "new {0}/{1}{2}", archtype, subfolderStr, filename ),
 				FileName = getPathToHugo(),
 				WorkingDirectory = Constants.hugoProjectPath,
 				WindowStyle = ProcessWindowStyle.Hidden
