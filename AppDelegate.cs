@@ -115,6 +115,12 @@ namespace HugoHelper
 
 		partial void onClickOpenHugoFolder( Foundation.NSObject sender )
 		{
+			openHugoFolder();
+		}
+
+
+		public void openHugoFolder()
+		{
 			var app = Constants.markdownAppPath;
 			if( app == null )
 			{
@@ -131,6 +137,13 @@ namespace HugoHelper
 
 			using( var proc = Process.Start( startInfo ) )
 				Console.WriteLine( "all done with opening Hugo folder" );
+		}
+
+
+		public static void startStopServer()
+		{
+			var winCon = NSApplication.SharedApplication.KeyWindow.WindowController as WindowController;
+			startStopServer( winCon.startServerToolbarItemPublic );
 		}
 
 
@@ -178,6 +191,8 @@ namespace HugoHelper
 
 				if( args.Data.Contains( "Web Server is available" ) )
 				{
+					NSNotificationCenter.DefaultCenter.PostNotificationName( Constants.serverStartedNotificationKey, null );
+
 					// get the port number and open the web page
 					var match = new Regex( @"\d+" ).Match( args.Data );
 					if( match.Success )
@@ -215,6 +230,7 @@ namespace HugoHelper
 
 			try
 			{
+				NSNotificationCenter.DefaultCenter.PostNotificationName( Constants.serverStoppedNotificationKey, null );
 				_serverProcess.StandardInput.WriteLine( "\x3" );
 				_serverProcess.StandardInput.Close();
 				_serverProcess.Close();
@@ -248,9 +264,8 @@ namespace HugoHelper
 			File.WriteAllLines( tomlPath, lines );
 
 			// restart the server
-			var winCon = NSApplication.SharedApplication.KeyWindow.WindowController as WindowController;
 			stopServer();
-			startStopServer( winCon.startServerToolbarItemPublic );
+			startStopServer();
 		}
 
 
@@ -403,6 +418,12 @@ namespace HugoHelper
 
 
 		partial void onClickStartHugulpWatcher( NSObject sender )
+		{
+			startHugulpWatcher();
+		}
+
+
+		public void startHugulpWatcher()
 		{
 			var command = string.Format( "cd {0} && hugulp watch", Constants.hugoProjectPath );
 			runCommandInTerminal( command );

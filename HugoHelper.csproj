@@ -107,6 +107,7 @@
     <Compile Include="Helpers\StringExt.cs" />
     <Compile Include="Helpers\Constants.cs" />
     <Compile Include="Helpers\OpenSavePanelFilter.cs" />
+    <Compile Include="TouchBarDelegate.cs" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="Main.storyboard" />

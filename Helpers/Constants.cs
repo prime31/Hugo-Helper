@@ -12,14 +12,18 @@ namespace HugoHelper
 
 		public static string logNotificationKey = "log-notification";
 		public static string siteRebuiltNotificationKey = "site-rebuilt-notification";
+		public static string serverStartedNotificationKey = "server-started-notification";
+		public static string serverStoppedNotificationKey = "server-stopped-notification";
 
 		public static string hugoContentPath { get { return Path.Combine( hugoProjectPath, "content" ); } }
+
 
 		public static string hugoProjectPath
 		{
 			get { return NSUserDefaults.StandardUserDefaults.StringForKey( _defaultsPathKey ); }
 			set { NSUserDefaults.StandardUserDefaults.SetString( value, _defaultsPathKey ); }
 		}
+
 
 		public static string markdownAppPath
 		{

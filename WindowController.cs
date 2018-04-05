@@ -7,7 +7,7 @@ using AppKit;
 
 namespace HugoHelper
 {
-	public partial class WindowController : NSWindowController
+	public partial class WindowController : NSWindowController, INSTouchBarDelegate
 	{
 		LogViewController _logViewController;
 		NSWindow _logViewWindow;
@@ -19,9 +19,7 @@ namespace HugoHelper
 
 
 		public WindowController( IntPtr handle ) : base( handle )
-		{
-			
-		}
+		{}
 
 
 		public override void WindowDidLoad()
@@ -29,6 +27,22 @@ namespace HugoHelper
 			ShouldCascadeWindows = false;
 			Window.FrameAutosaveName = "MainWindow";
 			base.WindowDidLoad();
+		}
+
+
+		[Export( "makeTouchBar" )]
+		public NSTouchBar MakeTouchBar()
+		{
+			NSApplication.SharedApplication.SetAutomaticCustomizeTouchBarMenuItemEnabled( true );
+
+			var del = new TouchBarDelegate();
+			var touchBar = new NSTouchBar
+			{
+				Delegate = del
+			};
+			touchBar.DefaultItemIdentifiers = del.getDefaultIdentifiers();
+
+			return touchBar;
 		}
 
 
