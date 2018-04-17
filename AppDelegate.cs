@@ -184,27 +184,34 @@ namespace HugoHelper
 			{
 				if( args.Data == null )
 					return;
-				
-				Console.WriteLine( args.Data );
-				NSNotificationCenter.DefaultCenter.PostNotification( NSNotification.FromName( Constants.logNotificationKey, new NSString( args.Data ) ) );
 
-
-				if( args.Data.Contains( "Web Server is available" ) )
+				try
 				{
-					NSNotificationCenter.DefaultCenter.PostNotificationName( Constants.serverStartedNotificationKey, null );
+					Console.WriteLine( args.Data );
+					NSNotificationCenter.DefaultCenter.PostNotification( NSNotification.FromName( Constants.logNotificationKey, new NSString( args.Data ) ) );
 
-					// get the port number and open the web page
-					var match = new Regex( @"\d+" ).Match( args.Data );
-					if( match.Success )
-						Process.Start( "http://localhost:" + match.Value );
+
+					if( args.Data.Contains( "Web Server is available" ) )
+					{
+						NSNotificationCenter.DefaultCenter.PostNotificationName( Constants.serverStartedNotificationKey, null );
+
+						// get the port number and open the web page
+						var match = new Regex( @"\d+" ).Match( args.Data );
+						if( match.Success )
+							Process.Start( "http://localhost:" + match.Value );
+					}
+					else if( args.Data.Contains( "Press Ctrl+C to stop" ) )
+					{
+						Console.WriteLine( "server appears to be running" );
+					}
+					else if( args.Data.Contains( "rebuilding site" ) )
+					{
+						NSNotificationCenter.DefaultCenter.PostNotification( NSNotification.FromName( Constants.siteRebuiltNotificationKey, null ) );
+					}
 				}
-				else if( args.Data.Contains( "Press Ctrl+C to stop" ) )
+				catch( Exception e )
 				{
-					Console.WriteLine( "server appears to be running" );
-				}
-				else if( args.Data.Contains( "rebuilding site" ) )
-				{
-					NSNotificationCenter.DefaultCenter.PostNotification( NSNotification.FromName( Constants.siteRebuiltNotificationKey, null ) );
+					Console.WriteLine( e );
 				}
 			};
 
