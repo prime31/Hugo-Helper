@@ -66,6 +66,27 @@ namespace HugoHelper
 		}
 
 
+		/// <summary>
+		/// either updates the date or the lastmod in the blog posts front matter
+		/// </summary>
+		/// <param name="post">Post.</param>
+		/// <param name="updateLastModifiedDate">If set to <c>true</c> update last modified date.</param>
+		public static void updateBlogPostDate( BlogPost post, bool updateLastModifiedDate = false )
+		{
+			// TODO: Finish this and write the BlogPost back to disk with the new date set
+			if( updateLastModifiedDate )
+			{
+				
+			}
+			else
+			{
+				post.date = DateTime.Now;
+			}
+
+			showAlert( "Not Yet Implemented", "Setting dates is not yet implemented" );
+		}
+
+
 		[Action( "validateMenuItem:" )]
 		public bool ValidateMenuItem( NSMenuItem item )
 		{

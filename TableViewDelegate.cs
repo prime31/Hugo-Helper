@@ -50,7 +50,7 @@ namespace HugoHelper
 					view.StringValue = blogPost.date.ToString( "MM/dd/yyyy" );
 				break;
 				case "Tags":
-				view.StringValue = blogPost.getTagsForDisplay();
+					view.StringValue = blogPost.getTagsForDisplay();
 				break;
 				case "Archetype":
 					view.StringValue = blogPost.archetype;

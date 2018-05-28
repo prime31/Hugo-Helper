@@ -49,5 +49,21 @@ namespace HugoHelper
 			tableView.ReloadData();
 		}
 
+
+		partial void onClickSetPubDate( NSMenuItem sender )
+		{
+			var row = ( tableView as RightClickTableView ).lastClickedRow;
+			var post = ( tableView.DataSource as TableViewDataSource ).blogPosts[(int)row];
+			AppDelegate.updateBlogPostDate( post );
+		}
+
+
+		partial void onClickSetLastModifiedDate( NSMenuItem sender )
+		{
+			var row = ( tableView as RightClickTableView ).lastClickedRow;
+			var post = ( tableView.DataSource as TableViewDataSource ).blogPosts[(int)row];
+			AppDelegate.updateBlogPostDate( post, true );
+		}
+
 	}
 }

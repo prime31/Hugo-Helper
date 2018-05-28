@@ -108,6 +108,10 @@
     <Compile Include="Helpers\Constants.cs" />
     <Compile Include="Helpers\OpenSavePanelFilter.cs" />
     <Compile Include="TouchBarDelegate.cs" />
+    <Compile Include="RightClickTableView.cs" />
+    <Compile Include="RightClickTableView.designer.cs">
+      <DependentUpon>RightClickTableView.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="Main.storyboard" />

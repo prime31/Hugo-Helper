@@ -283,7 +283,7 @@
                                     <rect key="frame" x="1" y="0.0" width="596" height="494"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
-                                        <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" rowSizeStyle="automatic" headerView="zvg-ae-Zom" viewBased="YES" id="6Ts-j2-0b1">
+                                        <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" rowSizeStyle="automatic" headerView="zvg-ae-Zom" viewBased="YES" id="6Ts-j2-0b1" customClass="RightClickTableView">
                                             <rect key="frame" x="0.0" y="0.0" width="603" height="471"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <size key="intercellSpacing" width="3" height="2"/>
@@ -425,6 +425,9 @@
                                                     </prototypeCellViews>
                                                 </tableColumn>
                                             </tableColumns>
+                                            <connections>
+                                                <outlet property="menu" destination="ipj-CU-4Qf" id="Su7-dQ-9OR"/>
+                                            </connections>
                                         </tableView>
                                     </subviews>
                                 </clipView>
@@ -448,6 +451,22 @@
                     </connections>
                 </viewController>
                 <customObject id="rPt-NT-nkU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+                <menu id="ipj-CU-4Qf">
+                    <items>
+                        <menuItem title="Set Date to Now" id="rY1-e7-bd3">
+                            <modifierMask key="keyEquivalentModifierMask"/>
+                            <connections>
+                                <action selector="onClickSetPubDate:" target="XfG-lQ-9wD" id="mOs-Ma-e8P"/>
+                            </connections>
+                        </menuItem>
+                        <menuItem title="Set Last Modified Date to Now" id="QD9-cS-a1I">
+                            <modifierMask key="keyEquivalentModifierMask"/>
+                            <connections>
+                                <action selector="onClickSetLastModifiedDate:" target="XfG-lQ-9wD" id="R32-fr-Xef"/>
+                            </connections>
+                        </menuItem>
+                    </items>
+                </menu>
             </objects>
             <point key="canvasLocation" x="134" y="767.5"/>
         </scene>

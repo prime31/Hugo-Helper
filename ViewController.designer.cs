@@ -14,6 +14,12 @@ namespace HugoHelper
 	{
 		[Outlet]
 		AppKit.NSTableView tableView { get; set; }
+
+		[Action ("onClickSetLastModifiedDate:")]
+		partial void onClickSetLastModifiedDate (AppKit.NSMenuItem sender);
+
+		[Action ("onClickSetPubDate:")]
+		partial void onClickSetPubDate (AppKit.NSMenuItem sender);
 		
 		void ReleaseDesignerOutlets ()
 		{
