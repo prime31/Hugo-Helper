@@ -112,9 +112,14 @@
     <Compile Include="RightClickTableView.designer.cs">
       <DependentUpon>RightClickTableView.cs</DependentUpon>
     </Compile>
+    <Compile Include="WebPreviewViewController.cs" />
+    <Compile Include="WebPreviewViewController.designer.cs">
+      <DependentUpon>WebPreviewViewController.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="Main.storyboard" />
+    <InterfaceDefinition Include="Resources\WebPreviewStoryboard.storyboard" />
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\server-on.png" />

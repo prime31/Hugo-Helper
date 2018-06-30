@@ -15,6 +15,8 @@ namespace HugoHelper
 	public partial class AppDelegate : NSApplicationDelegate, INSOpenSavePanelDelegate
 	{
 		public ViewController viewController;
+		public static string serverUrl;
+
 		static Process _serverProcess;
 		static NSToolbarItem _serverToolbarItem;
 		static NSImage _serverToolbarDefaultImage;
@@ -35,7 +37,7 @@ namespace HugoHelper
 			var files = Directory.GetFiles( "/usr/local/Cellar/hugo/", "hugo", SearchOption.AllDirectories );
 			if( files.Length == 0 )
 			{
-				showAlert( "Could not location a hugo installed on your system at '/usr/local/Cellar/hugo/'", "Aborting" );
+				showAlert( "Could not locate hugo installed on your system at '/usr/local/Cellar/hugo/'", "Aborting" );
 				throw new Exception( "Could not find hugo installed at '/usr/local/Cellar/hugo/'" );
 			}
 
@@ -211,7 +213,6 @@ namespace HugoHelper
 					Console.WriteLine( args.Data );
 					NSNotificationCenter.DefaultCenter.PostNotification( NSNotification.FromName( Constants.logNotificationKey, new NSString( args.Data ) ) );
 
-
 					if( args.Data.Contains( "Web Server is available" ) )
 					{
 						NSNotificationCenter.DefaultCenter.PostNotificationName( Constants.serverStartedNotificationKey, null );
@@ -219,7 +220,11 @@ namespace HugoHelper
 						// get the port number and open the web page
 						var match = new Regex( @"\d+" ).Match( args.Data );
 						if( match.Success )
-							Process.Start( "http://localhost:" + match.Value );
+						{
+							serverUrl = "http://localhost:" + match.Value;
+							Process.Start( serverUrl );
+							NSNotificationCenter.DefaultCenter.PostNotificationName( Constants.serverFoundUrlNotificationKey, null, new NSDictionary( "url", serverUrl ) );
+						}
 					}
 					else if( args.Data.Contains( "Press Ctrl+C to stop" ) )
 					{
@@ -259,6 +264,7 @@ namespace HugoHelper
 			try
 			{
 				NSNotificationCenter.DefaultCenter.PostNotificationName( Constants.serverStoppedNotificationKey, null );
+				serverUrl = null;
 				_serverProcess.StandardInput.WriteLine( "\x3" );
 				_serverProcess.StandardInput.Close();
 				_serverProcess.Close();
@@ -469,6 +475,13 @@ namespace HugoHelper
 		{
 			var winCon = NSApplication.SharedApplication.KeyWindow.WindowController as WindowController;
 			winCon.showServerLogs();
+		}
+
+
+		partial void onClickOpenWebPreviewWindow( NSObject sender )
+		{
+			var winCon = NSApplication.SharedApplication.KeyWindow.WindowController as WindowController;
+			winCon.showWebViewPreview( serverUrl );
 		}
 
 

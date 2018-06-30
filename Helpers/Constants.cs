@@ -13,6 +13,7 @@ namespace HugoHelper
 		public static string logNotificationKey = "log-notification";
 		public static string siteRebuiltNotificationKey = "site-rebuilt-notification";
 		public static string serverStartedNotificationKey = "server-started-notification";
+		public static string serverFoundUrlNotificationKey = "server-found-url-notification";
 		public static string serverStoppedNotificationKey = "server-stopped-notification";
 
 		public static string hugoContentPath { get { return Path.Combine( hugoProjectPath, "content" ); } }

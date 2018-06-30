@@ -132,5 +132,34 @@ namespace HugoHelper
 			_logViewWindow.MakeKeyAndOrderFront( _logViewWindow );
 		}
 
+
+		public void showWebViewPreview( string url = null )
+		{
+			WebPreviewViewController _webPreviewViewController = null;
+			NSWindow _webPreviewWindow = null;
+			if( _webPreviewViewController == null )
+			{
+				_webPreviewViewController = Storyboard.InstantiateControllerWithIdentifier( "WebPreviewViewController" ) as WebPreviewViewController;
+
+				var frame = _webPreviewViewController.View.Bounds;
+				var styleMask = NSWindowStyle.Titled | NSWindowStyle.Closable | NSWindowStyle.Resizable | NSWindowStyle.Borderless;
+				var rect = NSWindow.ContentRectFor( frame, styleMask );
+
+				var keyWindowFrame = NSApplication.SharedApplication.KeyWindow.Frame;
+				rect.X = keyWindowFrame.X + keyWindowFrame.Width;
+				rect.Y = keyWindowFrame.Y + keyWindowFrame.Height - rect.Height;
+
+				_webPreviewWindow = new NSWindow( rect, styleMask, NSBackingStore.Buffered, false );
+				_webPreviewWindow.Title = "Web Preview";
+				_webPreviewWindow.ContentViewController = _webPreviewViewController;
+				_webPreviewWindow.ReleasedWhenClosed = true;
+			}
+
+			_webPreviewWindow.MakeKeyAndOrderFront( _webPreviewWindow );
+
+			if( url != null )
+				_webPreviewViewController.goToUrl( url );
+		}
+
 	}
 }

@@ -29,6 +29,9 @@ namespace HugoHelper
 		[Action ("onClickOpenHugoFolder:")]
 		partial void onClickOpenHugoFolder (Foundation.NSObject sender);
 
+		[Action ("onClickOpenWebPreviewWindow:")]
+		partial void onClickOpenWebPreviewWindow (Foundation.NSObject sender);
+
 		[Action ("onClickSetHugoFolder:")]
 		partial void onClickSetHugoFolder (AppKit.NSMenuItem sender);
 
